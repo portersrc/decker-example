@@ -1,0 +1,34 @@
+2023.01.18 cporter
+
+This repo attempts to provide a simple example of how to build and run a
+new program using the Decker artifact here:
+  https://doi.org/10.5281/zenodo.7222072
+
+Launch the container:
+    $ docker run \
+            -it \
+            --rm \
+            --network host \
+            -w /root/decker \
+            -e HOST_PERMS="$(id -u):$(id -g)" \
+            --name decker-ae \
+            decker:latest \
+            /bin/bash
+
+In the container, you'll clone the repo, build Decker, and run the example:
+
+1. Clone the repo:
+    $ git clone https://github.com/portersrc/decker-example.git
+
+2. Build the Decker code:
+    $ cd whole-program-debloat
+    $ source setenv
+    $ mkdir build
+    $ cd build
+    $ cmake ../src
+    $ make
+
+3.Run this example:
+    $ cd ~/decker/decker-example
+    $ ./symlink-build-and-run.sh # Expected output: "Success. Exiting."
+    $ echo $? # Expected output: 0
